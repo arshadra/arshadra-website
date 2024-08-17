@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Image Display</title>
+    <style>
+        #image-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #random-image {
+            max-width: 100%;
+            height: auto;
+            display: none; /* Hide the image initially */
+        }
+        #show-image-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="image-container">
+        <button id="show-image-btn">Get your task from there</button>
+        <img id="random-image" src="" alt="Random Image" />
+    </div>
+
+    <script>
+        const images = [
+            'https://pcgearzone.com/wp-content/uploads/2024/07/laptop-master_11zon.webp',
+            'https://pcgearzone.com/wp-content/uploads/2024/07/pc-build.webp',
+            'https://pcgearzone.com/wp-content/uploads/2024/07/female-technician-repairing-computer-motherboard_11zon.webp'
+        ];
+
+        function getAndIncrementUserCount() {
+            const userCountKey = 'userCount';
+            let userCount = parseInt(localStorage.getItem(userCountKey)) || 0;
+            localStorage.setItem(userCountKey, ++userCount);
+            return userCount;
+        }
+
+        function getRandomImage(userCount) {
+            const imageIndex = (userCount - 1) % images.length;
+            return images[imageIndex];
+        }
+
+        // Event listener for button click
+        document.getElementById('show-image-btn').addEventListener('click', function() {
+            const userCount = getAndIncrementUserCount();
+            const imageElement = document.getElementById('random-image');
+            const selectedImage = getRandomImage(userCount);
+            imageElement.src = selectedImage;
+            imageElement.style.display = 'block'; // Show the image when button is clicked
+            this.style.display = 'none'; // Hide the button after clicking
+        });
+    </script>
+</body>
+</html>
